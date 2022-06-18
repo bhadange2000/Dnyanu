@@ -1,0 +1,239 @@
+Assignment No:1.6.1.1
+Title   : Implimentation of program based on singly Linked List.
+Name    : Bhadange Dnyaneshwar Santosh.
+Roll No : 10.
+-----------------------------------------------------------------
+
+#include<iostream.h>
+#include<conio.h>
+
+class NODE
+{
+	public:
+		NODE *next;
+		int data;
+};
+class SINGLELIST_10
+{
+	private:
+		NODE *start,*ptr1,*ptr2;
+	public:
+		SINGLIST_10();
+		void ADD_FIRST(int);
+		int DEL_FIRST();
+		void ADD_END(int);
+		int DEL_END();
+		void ADD_POS(int,int);
+		int DEL_POS(int);
+		void VIEW_ALL();
+};
+SINGLIST_10::SINGLIST_10()
+{
+	start=NULL;
+}
+void SINGLIST_10::ADD_FIRST(int ele)
+{
+	NODE *NEW=new NODE(); //create NODE
+	NEW->data=ele;        //assign data
+	NEW->next=NULL;
+	NEW->next=start;      //set link
+	start=NEW;
+}
+int SINGLIST_10::DEL_FIRST()
+{
+	int ele;
+	if(start==NULL)
+	{
+		cout<<"SINGLIST_10 is Empty : "<<endl;
+		return(NULL);
+	}
+	ele=start->data;
+	NODE *TEMP=start;
+	start=start->next;
+	delete TEMP;
+	return ele;
+}
+void SINGLIST_10::ADD_END(int ele)
+{
+	NODE *NEW=new NODE;
+	NEW->data=ele;
+	NEW->next=NULL;
+	if(start==NULL)
+		start=NEW;
+	else
+	{
+		ptr1=start;
+		while(ptr1->next!=NULL)
+		{
+			ptr1=ptr1->next;
+		}
+		 ptr1->next=NEW;
+	}
+}
+int SINGLIST_10::DEL_END()
+{
+	if(start==NULL)
+	{
+		cout<<"SINGLIST_10 is Empty ";
+		return NULL;
+	}
+	ptr1=start;
+	ptr2=NULL;
+	while(ptr1->next!=NULL)
+	{
+		ptr2=ptr1;
+		ptr1=ptr1->next;
+	}
+	int ele=ptr1->data;
+	NODE *TEMP=ptr1;
+	if(ptr2!=NULL)
+		ptr2->next=NULL;
+	else
+		start=NULL;
+	delete TEMP;
+	return ele;
+}
+void SINGLIST_10::ADD_POS(int ele,int pos)
+{
+	NODE *NEW=new NODE;
+	NEW->data=ele;
+	NEW->next=NULL;
+	if(pos==1)
+	{
+		NEW->next=start;
+		start=NEW;
+	}
+	else
+	{
+		ptr1=start;
+		ptr2=NULL;
+		int count=1;
+		while(count<pos)
+		{
+			ptr2=ptr1;
+			ptr1=ptr1->next;
+			count=count+1;
+		}
+		NEW->next=ptr1;
+		ptr2->next=NEW;
+	}
+}
+int SINGLIST_10::DEL_POS(int pos)
+{
+	int ele;NODE *TEMP;
+	if(start==NULL)
+	{
+		cout<<"SINGLIST_10 is Empty"<<endl;
+		return NULL;
+	}
+	if(pos==1)
+	{
+		ele=start->data;
+		TEMP=start;
+		start=start->next;
+	}
+	else
+	{
+		ptr1=start;
+		ptr2=NULL;
+		int count=1;
+		while(count<pos)
+		{
+			ptr2=ptr1;
+			ptr1=ptr1->next;
+			count=count+1;
+		}
+		ele=ptr1->data;
+		TEMP=ptr1;
+		ptr2->next=ptr1->next;
+	}
+	delete TEMP;
+	return ele;
+
+}
+void SINGLIST_10::VIEW_ALL()
+{
+	int data;
+	if(start==NULL)
+	{
+		cout<<"SINGLIST_10 is Empty"<<endl;
+	}
+	else
+	{
+		NODE *ptr;
+		ptr=start;
+		while(ptr!=NULL)
+		{
+			cout<<ptr->data<<"\t";
+			ptr=ptr->next;
+		}
+	}
+}
+void MENU()
+{
+	int opt,ele,pos;
+	SINGLIST_10 obj;
+	do
+	{
+		cout<<"\n ----MENU----";
+		cout<<"\n1.ADD_FIRST";
+		cout<<"\n2.DELETE_FIRST";
+		cout<<"\n3.ADD_END";
+		cout<<"\n4.DELETE_END";
+		cout<<"\n5.ADD_POSITION";
+		cout<<"\n6.DELETE_POSITION";
+		cout<<"\n7.VIEW_ALL";
+		cout<<"\n8.EXIT";
+		cout<<"\n Enter your Option"<<endl;
+		cin>>opt;
+		switch(opt)
+		{
+			case 1:
+				cout<<"Enter an Element : ";
+				cin>>ele;
+				obj.ADD_FIRST(ele);
+				break;
+			case 2:
+				ele=obj.DEL_FIRST();
+				if(ele!=NULL)
+					cout<<endl<<ele<<" is Deleted. "<<endl;
+				break;
+			case 3:
+				cout<<"Enter Element to add : ";
+				cin>>ele;
+				obj.ADD_END(ele);
+				break;
+			case 4:
+				ele=obj.DEL_END();
+				cout<<endl<<ele<<" is Deleted."<<endl;
+				break;
+			case 5:
+				cout<<"Enter Element to add at Pos : ";
+				cin>>ele;
+				cout<<"Enter POSITION to add : ";
+				cin>>pos;
+				obj.ADD_POS(ele,pos);
+				break;
+			case 6:
+				cout<<"Enter POSITION to Delete : ";
+				cin>>pos;
+				ele=obj.DEL_POS(pos);
+				cout<<endl<<ele<<" is Deleted."<<endl;
+				break;
+			case 7:
+				cout<<"Elemente in SINGLIST_10 are : "<<endl;
+				obj.VIEW_ALL();
+				break;
+			case 8:
+				return;
+			default:
+				cout<<"Enter Valid Option"<<endl;
+		}
+	}while(1);
+}
+void main()
+{
+	clrscr();
+	MENU();
+	getch();
+}
