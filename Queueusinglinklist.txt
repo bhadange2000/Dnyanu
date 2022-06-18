@@ -1,0 +1,114 @@
+#include<iostream.h>
+#include<conio.h>
+
+class NODE
+{
+	public:
+		NODE *next;
+		int data;
+};
+class QUEUE
+{
+	private:
+		NODE *front,*rear;
+	public:
+		QUEUE();
+		void ADD(int);
+		int DEL();
+		void VIEW_ALL();
+};
+QUEUE::QUEUE()
+{
+	front=NULL;
+}
+void QUEUE::ADD(int ele)
+{
+  NODE *NEW=new NODE();
+  NEW->data=ele;
+  NEW->next=NULL;
+  if(front==NULL)
+  {
+	front=NEW;
+	rear=NEW;
+  }
+  else
+  {
+	rear->next=NEW;
+	rear=NEW;
+  }
+}
+int QUEUE::DEL()
+{
+	int ele;
+	if(front==NULL)
+	{
+		cout<<"QUEUE is Empty : "<<endl;
+		return(NULL);
+	}
+	ele=front->data;
+	NODE *TEMP=front;
+	front=front->next;
+	delete TEMP;
+	return ele;
+}
+void QUEUE::VIEW_ALL()
+{
+	int data;
+	if(front==NULL)
+	{
+		cout<<"QUEUE is Empty"<<endl;
+	}
+	else
+	{   NODE *ptr;
+		ptr=front;
+		while(ptr!=NULL)
+		{
+			cout<<ptr->data<<" ";
+			ptr=ptr->next;
+		}
+	}
+
+}
+
+void MENU()
+{
+	int opt,ele;
+	QUEUE obj;
+	do
+	{
+		cout<<"\n-----MENU-----";
+		cout<<"\n1.INSERT";
+		cout<<"\n2.DELETE";
+		cout<<"\n3.LIST_ALL";
+		cout<<"\n4.EXIT";
+		cout<<"\n Choose your Option : ";
+		cin>>opt;
+		switch(opt)
+		{
+			case 1:
+				cout<<"Enter an Element : ";
+				cin>>ele;
+				obj.ADD(ele);
+				break;
+			case 2:
+				ele=obj.DEL();
+				if(ele!=NULL)
+					cout<<endl<<ele<<" is Deleted "<<endl;
+				break;
+			case 3:
+				cout<<"Elemente in List are : ";
+				obj.VIEW_ALL();
+				break;
+			case 4:
+				return;
+			default:
+				cout<<"Enter Valid Option"<<endl;
+		}
+	}while(1);
+}
+void main()
+{
+	clrscr();
+	MENU();
+	getch();
+}
